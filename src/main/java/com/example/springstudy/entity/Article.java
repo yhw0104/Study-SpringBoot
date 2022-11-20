@@ -1,6 +1,7 @@
 package com.example.springstudy.entity;
 
 import lombok.AllArgsConstructor;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.persistence.Column;
@@ -10,6 +11,7 @@ import javax.persistence.Id;
 
 @Entity // DB가 해당 객체를 Entity로 인식하게 하는 어노테이션
 @AllArgsConstructor
+@NoArgsConstructor
 @ToString
 public class Article {
 
