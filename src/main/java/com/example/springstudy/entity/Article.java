@@ -1,11 +1,16 @@
 package com.example.springstudy.entity;
 
+import lombok.AllArgsConstructor;
+import lombok.ToString;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity // DB가 해당 객체를 Entity로 인식하게 하는 어노테이션
+@AllArgsConstructor
+@ToString
 public class Article {
 
     @Id     // PK(Primary Key)기본키 지정
@@ -19,18 +24,18 @@ public class Article {
     private String content;
 
     // 생성자 추가
-    public Article(Long id, String title, String content) {
-        this.id = id;
-        this.title = title;
-        this.content = content;
-    }
+    // public Article(Long id, String title, String content) {
+    //    this.id = id;
+    //    this.title = title;
+    //    this.content = content;
+    //}
 
-    @Override
-    public String toString() {
-        return "Article{" +
-                "id=" + id +
-                ", title='" + title + '\'' +
-                ", content='" + content + '\'' +
-                '}';
-    }
+    //@Override
+    //public String toString() {
+    //   return "Article{" +
+    //            "id=" + id +
+    //           ", title='" + title + '\'' +
+    //            ", content='" + content + '\'' +
+    //           '}';
+    //}
 }
