@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 
 import java.util.List;
 
@@ -21,12 +22,14 @@ public class articleController {
     private ArticleRepository articleRepository;    // ArticleRepository객체를 사용하기 위해 선언
                                                     // 객체를 구현할 필요가 없다 -> 스프링 부트가 해줌
 
+    //게시글 추가 페이지 이동
     @GetMapping("/articles/new")
     public String newArticleForm() {
 
         return "articles/new";
     }
 
+    // 게시글 추가
     @PostMapping("/articles/create")    // form 태그에서 method를 post로 지정했기 때문에 PostMapping 사용
     public String CreateArticle(ArticleForm form){      // 받은 데이터를 ArticleForm의 form이라는 파라미터로 보내진다. (Dto처리)
         log.info(form.toString());      // -> 로깅기능으로 대체!
@@ -44,6 +47,7 @@ public class articleController {
         return "redirect:/articles/" + saved.getId();
     }
 
+    // 게시글 상세 페이지
     @GetMapping("/articles/{id}")   // Url 입력 받아오기
     public String show(@PathVariable Long id, Model model){  //@PathVariable -> 메서드 인자에 사용되어 URI 템플릿 변수의 값({id})을 메서드 인자로 할당하는데 사용
         // 1. Id로 데이터를 가져옴 -> 데이터를 가져오는 Repository로 데이터를 가져옴
@@ -53,6 +57,8 @@ public class articleController {
         // 3. 보여줄 페이지를 설정!
         return "articles/show";
     }
+
+    // 게시글 목록 페이지
     @GetMapping("/articles")
     public String index(Model model) {
         // 1. 모든 Article을 가져온다
@@ -61,5 +67,18 @@ public class articleController {
         model.addAttribute("articleList", articleEntityList);
         // 3. 뷰페이지 설정
         return "articles/index";    //articles/index.mustache
+    }
+
+    // 게시글 수정 페이지
+    @GetMapping("/articles/{id}/edit")
+    public String edit(@PathVariable Long id, Model model){
+        //수정할 데이터를 가져오기
+        Article articleEntity = articleRepository.findById(id).orElse(null);
+
+        // 모델에 데이터 등록
+        model.addAttribute("article", articleEntity);
+
+        // 뷰페이지 설정
+        return "articles/edit";
     }
 }
