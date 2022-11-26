@@ -41,7 +41,7 @@ public class articleController {
         Article saved = articleRepository.save(article);    // save(): CrudRepository에서 기본적으로 사용하게 해주는 메서드중 하나
         log.info(saved.toString());
         //System.out.println(saved.toString());
-        return "";
+        return "redirect:/articles/" + saved.getID();
     }
 
     @GetMapping("/articles/{id}")   // Url 입력 받아오기
