@@ -7,10 +7,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -80,5 +77,28 @@ public class articleController {
 
         // 뷰페이지 설정
         return "articles/edit";
+    }
+
+    // 게시글 수정 제출
+    @PostMapping("/articles/update")
+    public String update(ArticleForm form){
+        log.info(form.toString());      // -> 로깅기능으로 대체! / 콘솔창에서 확인 가능
+        //System.out.println(form.toString());    // ArticleForm클래스의 toString 메서드로 데이터가 잘 받아졌는지 확인한다.
+
+        // 1. Dto를 Entity로 변환한다.
+        Article articleEntity/* article이라는 Entity클래스 */ = form.toEntity(); // toEntity 메서드는 Dto에 있는 메서드
+        log.info(articleEntity.toString());
+        //System.out.println(article.toString());
+
+        // 2-1. DB에서 기존 데이터를 가져온다.
+        Article target = articleRepository.findById(articleEntity.getId()).orElse(null);
+
+        // 2-2. 기존 데이터가 있다면 값을 갱신한다.
+        if(target != null){
+            articleRepository.save(articleEntity);
+        }
+
+        // 수정 결과 페이지로 리다이렉트 한다.
+        return "redirect:/articles/" + articleEntity.getId();
     }
 }

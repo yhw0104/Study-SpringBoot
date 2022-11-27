@@ -1,7 +1,8 @@
 {{>layouts/header}}
 
 {{#article}}
-<form class="container" action="" method="post">
+<form class="container" action="/articles/update" method="post">    <!--action -> 어디로 method -> 어떻게 (form태그에서는 post와 get만 이용할 수 있음 => 객체를 json으로 변경해서 보낼 수 있음(ajax사용))-->
+    <input name="id" type="hidden" value="{{id}}">
     <div class="mb-3">
         <label class="form-label">제목</label>
         <input type="text" class="form-control" name="title" value="{{title}}">

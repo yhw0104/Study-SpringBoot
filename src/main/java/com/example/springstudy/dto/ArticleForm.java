@@ -8,6 +8,8 @@ import lombok.ToString;
 @ToString       // ToString 메서드 자동으로 생성
 public class ArticleForm {
 
+    private Long id;    // id
+
     private String title;   // 제목
     private String content; // 내용
 
@@ -27,6 +29,6 @@ public class ArticleForm {
 
     public Article toEntity() {
 
-        return new Article(null, title, content);   // Entity 클래스의 생성자를 리턴 값으로 갖는다.
+        return new Article(id, title, content);   // Entity 클래스의 생성자를 리턴 값으로 갖는다.
     }
 }
