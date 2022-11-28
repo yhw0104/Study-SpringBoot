@@ -20,5 +20,8 @@
     </tbody>
 </table>
 <a href="/articles/{{article.id}}/edit" class="btn btn-primary">수정</a>
+<!--생성 -> POST, 조회 -> GET, 수정 -> UPDATE, 삭제 -> DELETE-->
+<!--HTML에서는 POST와 GET만 제공하므로 임의로 GET방식을 제공하는 a태그(링크)를 사용! -> UPDATE, DELETE 는 js를 사용하여 가능!-->
+<a href="/articles/{{article.id}}/delete" class="btn btn-danger">삭제</a>
 <a href="/articles" class="btn btn-primary">목록으로 돌아가기</a>
 {{>layouts/footer}}

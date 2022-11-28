@@ -46,7 +46,7 @@ public class articleController {
 
     // 게시글 상세 페이지
     @GetMapping("/articles/{id}")   // Url 입력 받아오기
-    public String show(@PathVariable Long id, Model model){  //@PathVariable -> 메서드 인자에 사용되어 URI 템플릿 변수의 값({id})을 메서드 인자로 할당하는데 사용
+    public String show(@PathVariable Long id, Model model){  //@PathVariable -> 메서드 인자에 사용되어 URI 템플릿 변수의 값({id})을 메서드 인자로 할당하는데 사용 / Long id 변수를 url에 있는 id로 사용하고 싶어 사용하는 어노테이션
         // 1. Id로 데이터를 가져옴 -> 데이터를 가져오는 Repository로 데이터를 가져옴
            Article articleEntity = articleRepository.findById(id).orElse(null); // 만약 해당 id가 없다면 null을 할당
         // 2. 가져온 데이터를 모델에 등록
@@ -100,5 +100,21 @@ public class articleController {
 
         // 수정 결과 페이지로 리다이렉트 한다.
         return "redirect:/articles/" + articleEntity.getId();
+    }
+
+    // HTML에서 DELETE 요청을 지원하지 않으므로 GetMapping사용
+    @GetMapping("/articles/{id}/delete")
+    public String delete(@PathVariable Long id){    // Long id 변수를 url에 있는 id로 사용하고 싶어 사용하는 어노테이션
+
+        // 1. 삭제 대상을 가져온다
+        Article target = articleRepository.findById(id).orElse(null);   // repository안에 있는 메서드 findById 메서드를 사용하여 id를 가져온다.
+
+        // 2. 대상을 삭제한다
+        if(target != null){
+            articleRepository.delete(target);   // repository안에 있는 메서드 delete 메서드를 사용하여 id를 가져온다. (DB에서 데이터를 가져올 때는 repository에서 가져온다.)
+        }
+
+        // 3. 결과 페이지로 redirect한다
+        return "redirect:/articles";
     }
 }
