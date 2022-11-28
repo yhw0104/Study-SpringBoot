@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -104,7 +105,7 @@ public class articleController {
 
     // HTML에서 DELETE 요청을 지원하지 않으므로 GetMapping사용
     @GetMapping("/articles/{id}/delete")
-    public String delete(@PathVariable Long id){    // Long id 변수를 url에 있는 id로 사용하고 싶어 사용하는 어노테이션
+    public String delete(@PathVariable Long id, RedirectAttributes rttr){    // Long id 변수를 url에 있는 id로 사용하고 싶어 사용하는 어노테이션
 
         // 1. 삭제 대상을 가져온다
         Article target = articleRepository.findById(id).orElse(null);   // repository안에 있는 메서드 findById 메서드를 사용하여 id를 가져온다.
@@ -112,6 +113,7 @@ public class articleController {
         // 2. 대상을 삭제한다
         if(target != null){
             articleRepository.delete(target);   // repository안에 있는 메서드 delete 메서드를 사용하여 id를 가져온다. (DB에서 데이터를 가져올 때는 repository에서 가져온다.)
+            rttr.addFlashAttribute("msg", "삭제가 완료되었습니다.");      // addFlashAttribute는 일회성이라 한 번 사용되고 없어짐
         }
 
         // 3. 결과 페이지로 redirect한다
