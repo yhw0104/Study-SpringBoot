@@ -26,7 +26,7 @@ public class Article {
     @Column
     private String content;
 
-    // patch 요청 받은 함수 ( article의 title이나 content가 null값이 아니라면 Entity에 값을 넣어준다.
+    // patch 요청 받은 함수 ( article의 title이나 content가 null값이 아니라면 Entity에 값을 넣어준다.)
     public void patch(Article article) {
         if (article.title != null)
             this.title = article.title;

@@ -70,12 +70,12 @@ public class ArticleApiController {
         // 대상 Entity 조회
         Article target = articleRepository.findById(id).orElse(null);
 
-        // 대상 Entity 삭제
+        // 대상 Entity가 없다면 오류 코드 반환
         if(target == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);   // BAD_REQUEST = 400번 코드 반환
         }
 
-        // 데이터 반환
+        // 데이터 삭제 및 반환
         articleRepository.delete(target);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
