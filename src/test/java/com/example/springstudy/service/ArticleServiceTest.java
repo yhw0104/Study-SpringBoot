@@ -65,7 +65,7 @@ class ArticleServiceTest {
     void save__성공__title과_content만_있는_dto_입력() {
         //예상
         String title = "4444";
-        String content = "dddd";
+        String content = "aaaa";
         ArticleForm dto = new ArticleForm(null, title, content);
         Article expected = new Article(4L, title, content);
 
@@ -100,25 +100,69 @@ class ArticleServiceTest {
     @Test
     @Transactional
     void edit__성공__존재하는_id_와_title만_있는_dto_입력() {
+        // 예상
+        Long id = 1L;
+        String title = "6666";
+        String content = "aaaa";
+        ArticleForm dto = new ArticleForm(1L, title, null);
+        Article expected = new Article(1L, title, content);
+
+        // 실제
+        Article article = articleService.edit(id, dto);
+
+        // 비교
+        assertEquals(expected.toString(), article.toString());
     }
 
     @Test
     @Transactional
-    void edit__실패__존재하지않는_id의_dto_입력(){
+    void edit__실패__존재하지않는_id의_dto_입력(){         // ArticleService edit 메서드에서 만약 target 값이 null값이면(orElse구문 이용) null 반환으로 메서드 수정
+        // 예상                                        // 이렇게 해야 이 테스트 실행 성공이 됨 (이전 메서드로 하면 null 값이 안나오기 때문에
+        Long id = -1L;
+        ArticleForm dto = new ArticleForm(id, null, null);
+        Article expected = null;
+
+        // 실제
+        Article article = articleService.edit(id, dto);
+
+        // 비교
+        assertEquals(expected, article);
+
     }
 
     @Test
     @Transactional
-    void edit__실패__id만_있는_dto_입력(){
+    void edit__실패__id만_있는_dto_입력(){     // 업데이트를 위해 던져진 JSON에 id만 있는 경우, 어떤 값을 반환할지 결정 -> 기존 id값의 데이터를 반환할지, 아니면 null또는 에러를 발생시킬지
+                                            // 이 테스트는 id값만 있고 title, content가 같을 경우 같은 값을 반환하는 테스트 코드이다.(내가 직접 결정함)
+        // 예상
+        Long id = 1L;
+        ArticleForm dto = new ArticleForm(id, null, null);
+        Article expected = new Article(id, "1111", "aaaa");
+
+        // 실제
+        Article article = articleService.edit(id, dto);
+
+        // 비교
+        assertEquals(expected.toString(), article.toString());
     }
 
     @Test
     @Transactional
     void delete__성공__존재하는_id_입력() {
+        // 해당 id 삭제시 나오는 값을 모르겠음
     }
 
     @Test
     @Transactional
     void delete__실패__존재하지_않는_id_입력() {
+        // 예상
+        Long id = -1L;
+        Article expected = null;
+
+        // 실제
+        Article article = articleService.delete(id);
+
+        // 비교
+        assertEquals(expected, article);
     }
 }

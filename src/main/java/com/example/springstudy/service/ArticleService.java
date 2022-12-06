@@ -43,20 +43,39 @@ public class ArticleService {
         return articleRepository.save(article);
     }
 
+//    게시글 수정
+//    public Article edit(long id, ArticleForm dto){
+//        // 1. 수정용 Entity 생성
+//        Article article = dto.toEntity();
+//
+//        // 2. 대상 Entity 찾기
+//        Article target = articleRepository.findById(id).orElse(null);
+//
+//        // 3. 업데이트
+//        target.patch(article);
+//        Article updated = articleRepository.save(target);
+//
+//        // 4. 업데이트 값 반환
+//        return updated;
+//    }
+
+//  게시글 수정
     public Article edit(long id, ArticleForm dto){
         // 1. 수정용 Entity 생성
         Article article = dto.toEntity();
 
-        // 2. 대상 Entitu 찾기
+        // 2. 대상 Entity 찾기
         Article target = articleRepository.findById(id).orElse(null);
 
         // 3. 업데이트
-        target.patch(article);
-        Article updated = articleRepository.save(target);
-
-        // 4. 업데이트 값 반환
-        return updated;
+        if( target != null) {
+            target.patch(article);
+            Article updated = articleRepository.save(target);
+            return updated;
+        }
+        else return null;
     }
+
 
     // DELETE
     @DeleteMapping("/api/articles/{id}")
