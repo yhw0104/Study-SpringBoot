@@ -149,7 +149,20 @@ class ArticleServiceTest {
     @Test
     @Transactional
     void delete__성공__존재하는_id_입력() {
-        // 해당 id 삭제시 나오는 값을 모르겠음
+        // 예상
+        Long id = 1L;
+        String title = "1111";
+        String content = "aaaa";
+
+//        ArticleForm dto = new ArticleForm(id, "1111", "aaaa");
+        Article expected = new Article(id, title, content);
+
+        // 실제
+        Article article = articleService.delete(id);
+
+        // 비교
+        assertEquals(expected.toString(), article.toString());
+
     }
 
     @Test
