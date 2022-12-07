@@ -18,7 +18,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Service    // 서비스 선언(서비스 객체를  스프링부트에 생성)
+@Service    // 서비스 선언(서비스 객체를 스프링부트에 생성)
 public class ArticleService {
 
     @Autowired  // DI
